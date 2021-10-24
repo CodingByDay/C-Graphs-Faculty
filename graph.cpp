@@ -11,29 +11,36 @@ void addEdge(vector<int> adj[], int s, int d) {
   adj[d].push_back(s);
 }
 
-
-
-
-
-void bfsCompute(int startNode, int numberOfNodes, vector<int> adj[]) {
+int* bfsCompute(int startNode, int numberOfNodes, vector<int> adj[]) {
   // Queue initialization
  queue<int> q;
- int prev[numberOfNodes]; 
+ int* prev = new int[numberOfNodes]; 
  bool visitedNodes[numberOfNodes] = { false }; // Initialized to false.
-q.push(startNode);
+ q.push(startNode);
+ cout << startNode;
  visitedNodes[startNode] = true;
- while(!q.empty()) {
-   int node = q.front();
-   q.pop();
 
-   vector<int> neighboors = adj[node];
+    while(!q.empty()) {
+      int node = q.front();
+      q.pop();
 
-   for (auto x : neighboors) {
-     cout << "Element is" << " " << x << "\n";
-   }
+      vector<int> neighboors = adj[node];
 
- 
+      for (auto x : neighboors) {
+        if(!visitedNodes[x])  {
+          q.push(x);
+          visitedNodes[x] = true;
+          prev[x] = node;
+
+    
+        }
+      }
  }
+ int* returnArray;
+
+ returnArray = prev;
+
+ return returnArray;
 }
 // Print the graph
 void printGraph(vector<int> adj[], int V) {
@@ -74,7 +81,14 @@ int main() {
   printGraph(adj, V);
 
 
-  bfsCompute(0, 9, adj);
+  int *path;
+
+  path = bfsCompute(0, 9, adj);
+
+  for (int i = 0; i <= 9; i++) {
+    cout << "The path at index " << i << "is " << path[i] << "\n";
+  }
+
   scanf("sssssssssSSSSS");
   
 }
