@@ -6,18 +6,47 @@
 using namespace std;
 
 // Add edge
+
+
 void addEdge(vector<int> adj[], int s, int d) {
   adj[s].push_back(d);
   adj[d].push_back(s);
 }
 
+
+int * reconstructIfPossible(int startNode,int endNode, int prev[]) {
+  vector<int> path;
+  for(int at = endNode; at < endNode | at > startNode; at=prev[at]) {
+    path.push_back(at);
+    
+    if(at==startNode) {
+      break;
+    }
+  }
+
+reverse(path.begin(),path.end());
+
+if(path[0]==startNode) {
+  int * pathReturn = new int[path.size()];
+  std::copy(path.begin(), path.end(), pathReturn);
+    
+
+  return pathReturn;
+} else{
+   int * pathReturn = new int[path.size()];
+       cout << "False ";
+
+  return pathReturn;
+}
+
+}
 int* bfsCompute(int startNode, int numberOfNodes, vector<int> adj[]) {
   // Queue initialization
  queue<int> q;
  int* prev = new int[numberOfNodes]; 
  bool visitedNodes[numberOfNodes] = { false }; // Initialized to false.
  q.push(startNode);
- cout << startNode;
+ //cout << startNode;
  visitedNodes[startNode] = true;
 
     while(!q.empty()) {
@@ -74,22 +103,28 @@ int main() {
   addEdge(adj, 5, 3);
   addEdge(adj, 5, 4);
   addEdge(adj, 3, 4);
+  
 
 
-
-
-  printGraph(adj, V);
+ // printGraph(adj, V);
 
 
   int *path;
-
+  int startNode = 0;
+  int endNode = 9;
   path = bfsCompute(0, 9, adj);
 
+  int* finalPath;
+  finalPath = reconstructIfPossible(0, 4, path);
   for (int i = 0; i <= 9; i++) {
-    cout << "The path at index " << i << "is " << path[i] << "\n";
+    if(finalPath[i] > endNode | finalPath[i] < startNode) {
+      break;
+    } else {
+    cout << "Shortest path from beggining at index " << i << " is" <<":"<< " "<<finalPath[i]<< "\n";
+    }
   }
 
-  scanf("sssssssssSSSSS");
+  scanf("Waiting for input.");
   
 }
 
